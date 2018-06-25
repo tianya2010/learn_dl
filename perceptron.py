@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
+from functools import reduce
+from itertools import starmap
 
 class Perceptron(object):
     def __init__(self, input_num, activator):
@@ -30,7 +32,7 @@ class Perceptron(object):
         # 最后利用reduce求和
         return self.activator(
             reduce(lambda a, b: a + b,
-                   map(lambda (x, w): x * w,  
+                   starmap(lambda (x, w): x * w,  
                        zip(input_vec, self.weights))
                 , 0.0) + self.bias)
  
@@ -63,7 +65,7 @@ class Perceptron(object):
         # 变成[(x1,w1),(x2,w2),(x3,w3),...]
         # 然后利用感知器规则更新权重
         delta = label - output
-        self.weights = map(
+        self.weights = starmap(
             lambda (x, w): w + rate * delta * x,
             zip(input_vec, self.weights))
         # 更新bias
