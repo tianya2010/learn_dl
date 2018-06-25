@@ -11,7 +11,7 @@ class Perceptron(object):
         '''
         self.activator = activator
         # 权重向量初始化为0
-        self.weights = [0.0 for _ in range(input_num)]
+        self.weights = [1.0 for _ in range(input_num)]
 
 		# 偏置项初始化为0
         self.bias = 0.0
@@ -124,8 +124,7 @@ if __name__ == '__main__':
     # 训练and感知器
     and_perception = train_and_perceptron()
     # 打印训练获得的权重
-    # weights = and_perception.weights
-    print(list(and_perception.weights))
+    print(and_perception)
 
     # 测试
     print ('1 and 1 = %d' % and_perception.predict([1, 1]))
