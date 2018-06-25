@@ -12,8 +12,10 @@ class Perceptron(object):
         self.activator = activator
         # 权重向量初始化为0
         self.weights = [0.0 for _ in range(input_num)]
-        # 偏置项初始化为0
+
+		# 偏置项初始化为0
         self.bias = 0.0
+
 
     def __str__(self):
         '''
@@ -32,9 +34,12 @@ class Perceptron(object):
         # 最后利用reduce求和
         return self.activator(
             reduce(lambda a, b: a + b,
-                   starmap(lambda (x, w): x * w,  
+                   starmap(lambda x, w: x * w,  
                        zip(input_vec, self.weights))
                 , 0.0) + self.bias)
+
+
+
  
     def train(self, input_vecs, labels, iteration, rate):
         '''
@@ -42,6 +47,7 @@ class Perceptron(object):
         '''
         for i in range(iteration):
             self._one_iteration(input_vecs, labels, rate)
+
 
     def _one_iteration(self, input_vecs, labels, rate):
         '''
@@ -54,8 +60,12 @@ class Perceptron(object):
         for (input_vec, label) in samples:
             # 计算感知器在当前权重下的输出
             output = self.predict(input_vec)
+            # output = 1
             # 更新权重
             self._update_weights(input_vec, output, label, rate)
+
+
+
 
     def _update_weights(self, input_vec, output, label, rate):
         '''
@@ -64,12 +74,17 @@ class Perceptron(object):
         # 把input_vec[x1,x2,x3,...]和weights[w1,w2,w3,...]打包在一起
         # 变成[(x1,w1),(x2,w2),(x3,w3),...]
         # 然后利用感知器规则更新权重
+        # 
+        # 更新weights
         delta = label - output
-        self.weights = starmap(
-            lambda (x, w): w + rate * delta * x,
-            zip(input_vec, self.weights))
+        orign_weights = self.weights
+        for i in range(len(input_vec)):
+            self.weights[i] = self.weights[i] + rate*delta*input_vec[i]
+
         # 更新bias
         self.bias += rate * delta
+
+
 
 
 def f(x):
@@ -109,11 +124,11 @@ if __name__ == '__main__':
     # 训练and感知器
     and_perception = train_and_perceptron()
     # 打印训练获得的权重
-    print and_perception
+    # weights = and_perception.weights
+    print(list(and_perception.weights))
+
     # 测试
-    print '1 and 1 = %d' % and_perception.predict([1, 1])
-    print '0 and 0 = %d' % and_perception.predict([0, 0])
-    print '1 and 0 = %d' % and_perception.predict([1, 0])
-    print '0 and 1 = %d' % and_perception.predict([0, 1])
-
-
+    print ('1 and 1 = %d' % and_perception.predict([1, 1]))
+    print ('0 and 0 = %d' % and_perception.predict([0, 0]))
+    print ('1 and 0 = %d' % and_perception.predict([1, 0]))
+    print ('0 and 1 = %d' % and_perception.predict([0, 1]))
