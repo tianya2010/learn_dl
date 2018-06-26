@@ -8,9 +8,9 @@ from perceptron import Perceptron
 f = lambda x: x
 
 class LinearUnit(Perceptron):
-    def __init__(self, input_num):
+    def __init__(self, input_num,func):
         '''初始化线性单元，设置输入参数的个数'''
-        Perceptron.__init__(self, input_num, f)
+        Perceptron.__init__(self, input_num, func)
 
 
 def get_training_dataset():
@@ -30,7 +30,7 @@ def train_linear_unit():
     使用数据训练线性单元
     '''
     # 创建感知器，输入参数的特征数为1（工作年限）
-    lu = LinearUnit(1)
+    lu = LinearUnit(1,f)
     # 训练，迭代10轮, 学习速率为0.01
     input_vecs, labels = get_training_dataset()
     lu.train(input_vecs, labels, 10, 0.01)
@@ -56,10 +56,10 @@ if __name__ == '__main__':
     '''训练线性单元'''
     linear_unit = train_linear_unit()
     # 打印训练获得的权重
-    print linear_unit
+    print (linear_unit)
     # 测试
-    print 'Work 3.4 years, monthly salary = %.2f' % linear_unit.predict([3.4])
-    print 'Work 15 years, monthly salary = %.2f' % linear_unit.predict([15])
-    print 'Work 1.5 years, monthly salary = %.2f' % linear_unit.predict([1.5])
-    print 'Work 6.3 years, monthly salary = %.2f' % linear_unit.predict([6.3])
+    print ('Work 3.4 years, monthly salary = %.2f' % linear_unit.predict([3.4]))
+    print ('Work 15 years, monthly salary = %.2f' % linear_unit.predict([15]))
+    print ('Work 1.5 years, monthly salary = %.2f' % linear_unit.predict([1.5]))
+    print ('Work 6.3 years, monthly salary = %.2f' % linear_unit.predict([6.3]))
     plot(linear_unit)

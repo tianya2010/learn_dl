@@ -14,7 +14,7 @@ class Perceptron(object):
         self.weights = [1.0 for _ in range(input_num)]
 
 		# 偏置项初始化为0
-        self.bias = 0.0
+        self.bias = 1.0
 
 
     def __str__(self):
@@ -115,7 +115,7 @@ def train_and_perceptron():
     p = Perceptron(2, f)
     # 训练，迭代10轮, 学习速率为0.1
     input_vecs, labels = get_training_dataset()
-    p.train(input_vecs, labels, 10, 0.1)
+    p.train(input_vecs, labels, 100, 0.1)
     #返回训练好的感知器
     return p
 
